@@ -1,9 +1,9 @@
 {
   "name": "jjson",
-  "version": "0.0.1",
+  "version": "0.0.1-fixed",
   "description": "A CLI json beautify program written by node.js.",
   "bin": {
-    "jjson": "jjson.js"
+    "jjson": "bin/jjson.js"
   },
   "dependencies": {
     "nomnom": "~1.8.0"

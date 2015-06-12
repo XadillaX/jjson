@@ -1,6 +1,6 @@
 {
   "name": "jjson",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A CLI json beautify program written by node.js.",
   "bin": {
     "jjson": "bin/jjson.js"
@@ -18,7 +18,7 @@
     "beautify"
   ],
   "author": "XadillaX",
-  "license": "GPLv2",
+  "license": "MIT",
   "preferGlobal": true,
   "readmeFilename": "README.md",
   "gitHead": "37aaa5040f10659834d285a2b9ec85c3cdc645e3",

@@ -1,12 +1,12 @@
 {
   "name": "jjson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CLI json beautify program written by node.js.",
   "bin": {
     "jjson": "bin/jjson.js"
   },
   "scripts": {
-    "postinstall": "rm package-lock.json"
+    "postinstall": "rm -f package-lock.json"
   },
   "dependencies": {
     "jsonlint": "^1.6.3",

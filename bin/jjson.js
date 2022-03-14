@@ -1,46 +1,65 @@
 #! /usr/bin/env node
-/**
- * XadillaX created at 2014-08-22 13:00:30
- *
- * Copyright (c) 2014 Death Moon's Gensokyo, all rights
- * reserved
- */
-var fs = require("fs");
-var opts = require("nomnom").option("file", {
-    abbr    : "f",
-    help    : "JSON filename.",
+'use strict';
+
+const fs = require('fs');
+
+const jsonParser = require('jsonlint').parser;
+
+const opts = require('nomnom')
+  .option('file', {
+    abbr: 'f',
+    help: 'JSON filename.',
     required: true,
-    callback: function(fn) {
-        if(!fs.existsSync(fn)) return "file " + fn + " not exsits.";
-    }
-}).option("encoding", {
-    abbr    : "e",
-    help    : "JSON file encoding.",
-    default : "utf8"
-}).option("indent", {
-    abbr    : "i",
-    help    : "Number of indent for each line.",
-    default : 2
-}).option("vim-plugin-mode", {
-    abbr    : "v",
-    help    : "Whether it's in VIM plugin mode.",
-    flag    : true
-}).script("jjson").parse();
+    callback: fn => {
+      if (!fs.existsSync(fn)) {
+        return 'file ' + fn + ' not exsits.';
+      }
+    },
+  })
+  .option('encoding', {
+    abbr: 'e',
+    help: 'JSON file encoding.',
+    default: 'utf8',
+  })
+  .option('indent', {
+    abbr: 'i',
+    help: 'Number of indent for each line.',
+    default: 2,
+  })
+  .script('jjson')
+  .parse();
 
-var filename = opts.file;
+const filename = opts.file;
+
+jsonParser.parseError = jsonParser.lexer.parseError = (str, hash) => {
+  // Refer to @dfishburn's PR:
+  //   https://github.com/XadillaX/jjson/pull/1
+  const msg =
+    `${filename},${hash.loc.first_line},${hash.loc.last_column},found: ` +
+    `'${hash.token}' - expected: ${hash.expected.join(',')}.`;
+  throw new Error(msg);
+};
+
+// eslint-disable-next-line node/prefer-promises/fs
 fs.readFile(filename, { encoding: opts.encoding }, function(err, json) {
-    if(err) {
-        return console.error("Error occurred while reading file: " + err.message);
-    }
+  if (err) {
+    console.error(`Error occurred while reading file: ${err.message}`);
+    process.exit(1);
+  }
 
-    var orig = json;
-    try {
-        json = JSON.stringify(JSON.parse(json), true, opts.indent);
-    } catch(e) {
-        if(opts["vim-plugin-mode"]) return console.log(orig);
-        return console.error("Error occurred while parsing file: " + e.message);
-    }
+  try {
+    jsonParser.parse(json);
+  } catch (e) {
+    console.error(`Error occurred while parsing file: ${e.message}`);
+    process.exit(1);
+  }
 
-    console.log(json);
+  try {
+    json = JSON.stringify(JSON.parse(json), true, opts.indent);
+  } catch (e) {
+    console.error(`Error occurred while parsing file: ${e.message}`);
+    process.exit(1);
+  }
+
+  console.log(json);
 });
-

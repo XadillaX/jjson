@@ -1,6 +1,6 @@
 # J.JSON
 
-A CLI json beautify program written by node.js.
+A CLI json beautifier written in Node.js.
 
 ## Installation
 
@@ -23,5 +23,4 @@ Options:
 
 ## Contribution
 
-You're welcome to fork and push requests!
-
+Issues and PRs are welcomed!

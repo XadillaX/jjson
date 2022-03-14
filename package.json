@@ -1,12 +1,16 @@
 {
   "name": "jjson",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "A CLI json beautify program written by node.js.",
   "bin": {
     "jjson": "bin/jjson.js"
   },
+  "scripts": {
+    "postinstall": "rm package-lock.json"
+  },
   "dependencies": {
-    "nomnom": "~1.8.0"
+    "jsonlint": "^1.6.3",
+    "nomnom": "^1.8.0"
   },
   "repository": {
     "type": "git",
@@ -17,12 +21,14 @@
     "JSON",
     "beautify"
   ],
-  "author": "XadillaX",
+  "author": "XadillaX <i@2333.moe>",
   "license": "MIT",
   "preferGlobal": true,
-  "readmeFilename": "README.md",
-  "gitHead": "37aaa5040f10659834d285a2b9ec85c3cdc645e3",
   "bugs": {
     "url": "https://github.com/XadillaX/jjson/issues"
+  },
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-config-egg": "^11.0.1"
   }
 }

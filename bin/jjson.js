@@ -26,6 +26,16 @@ const opts = require('nomnom')
     help: 'Number of indent for each line.',
     default: 2,
   })
+  .option('rewrite', {
+    abbr: 'r',
+    help: 'Rewrite file.',
+    flag: true,
+    default: false
+  })
+  .option('output', {
+    abbr: 'o',
+    help: 'Output to file.',
+  })
   .script('jjson')
   .parse();
 
@@ -61,5 +71,19 @@ fs.readFile(filename, { encoding: opts.encoding }, function(err, json) {
     process.exit(1);
   }
 
-  console.log(json);
+  if (opts.rewrite) {
+    fs.writeFile(filename, json, err => {
+      if (err) {
+        console.error(err);
+      }
+    });
+  } else if (opts.output && opts.output.length > 0) {
+    fs.writeFile(opts.output, json, err => {
+      if (err) {
+        console.error(err);
+      }
+    });
+  } else {
+    console.log(json)
+  }
 });

@@ -17,6 +17,8 @@ Options:
    -f, --file       JSON filename.
    -e, --encoding   JSON file encoding.  [default to utf8]
    -i, --indent     Number of indent for each line.  [default to 2]
+   -r, --rewrite    Rewrite file  [false]
+   -o, --output     Redirect to File  []
    -v, --vim-plugin-mode   Whether it's in VIM plugin mode. (usually use this
            option in vim plugins)
 ```
